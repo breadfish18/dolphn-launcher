@@ -1,0 +1,172 @@
+html {
+    overflow: hidden;
+    font-family: Noto Sans TC, sans-serif;
+}
+
+body {
+    background-color: #080A13;
+    color: #FFF;
+}
+
+html,
+body,
+p,
+ol,
+ul,
+li,
+dl,
+dt,
+dd,
+blockquote,
+figure,
+fieldset,
+legend,
+textarea,
+pre,
+iframe,
+button,
+hr,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+    padding: 0;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+a {
+    color: #1787FF;
+    margin-left: 6px;
+}
+
+.form {
+    position: absolute;
+    text-align: left;
+}
+
+.login {
+    left: calc(50vw - (640px / 2));
+    top: calc(50vh - (195px / 2));
+    width: 640px;
+    height: 195px;
+}
+
+.signup {
+    left: calc(50vw - (640px / 2));
+    top: calc(50vh - (315px / 2));
+    width: 640px;
+    height: 315px;
+}
+
+.label {
+    font: Bold 20px/24px Noto Sans TC;
+    margin-bottom: 8px;
+}
+
+.input {
+    background-color: #040509;
+    color: #FFF;
+    font: lighter 16px/24px Noto Sans TC;
+    border: 0px;
+    border-radius: 10px;
+    height: 38px;
+    padding-left: 16px;
+    width: 624px;
+    margin-bottom: 12px;
+    border: 1px solid transparent;
+    outline: none;
+}
+
+.input[type="password"] {
+    font: small-caption;
+    font-size: 16px;
+    height: 38px;
+}
+
+.input::placeholder {
+    color: #CBCBCB40;
+    font: lighter 16px/24px Noto Sans TC;
+    line-height: 38px;
+}
+
+.title {
+    margin-left: 96px;
+    margin-top: 32px;
+}
+
+.button {
+    background-color: #040509;
+    color: #FFF;
+    font: lighter 16px/24px Noto Sans TC;
+    border: 0px;
+    border-radius: 10px;
+    height: 38px;
+    cursor: pointer;
+    padding-left: 12px;
+    padding-right: 12px;
+    outline: none;
+}
+
+.tag {
+    padding-left: 4px;
+    padding-right: 4px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    background-color: #DF4755;
+    border-radius: 8px;
+    margin-top: -4px;
+    margin-bottom: 8px;
+    display: none;
+}
+
+.is-success {
+    border: 1px solid #1787FF;
+}
+
+.is-error {
+    border: 1px solid #DF4755;
+}
+
+@media only screen and (max-width: 700px) {
+    .input {
+        height: 38px;
+        width: 86vw
+    }
+
+    .login,
+    .signup {
+        left: calc(50vw - (90vw / 2));
+        width: 90vw;
+    }
+
+    .title {
+        margin-left: calc(50vw - (90vw / 2));
+        margin-top: 22px;
+    }
+}
+
+.window-title-bar {
+    width: 100vw;
+    height: 32px;
+    background: #06070e;
+    -webkit-user-select: none;
+    -webkit-app-region: drag;
+}
+
+.close {
+    width: 28px;
+    height: 28px;
+    margin-top: 2px;
+    margin-right: 2px;
+    -webkit-app-region: no-drag;
+    cursor: pointer;
+    float: right;
+}

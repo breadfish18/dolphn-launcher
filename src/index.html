@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>dolphn launcher</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+  <div class="window-title-bar">
+    <div class="close" onclick="win.close()">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1" stroke-linecap="round"
+        stroke-linejoin="round" class="feather feather-x">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </div>
+  </div>
+  <div class="form">
+    <h3 id="job">Logged in as:</h3>
+    <progress id="progress" value="0" max="100"></progress>
+    <div>
+      <button id="launch" onclick="play()" class="button">Launch</button>
+    </div>
+  </div>
+</body>
+<script src="./minecraft.js"></script>
+
+</html>
