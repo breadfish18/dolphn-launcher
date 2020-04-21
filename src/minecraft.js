@@ -33,7 +33,7 @@ job.innerText = `Logged in as: ${user.selectedProfile.name}`
 
 
 async function downloadModpack() {
-    await download("https://codeload.github.com/MayaFX/sanctuary-modpack/zip/master", path.join(__dirname, "../../../"), {
+    await download("https://codeload.github.com/breadfish18/sanctuary-modpack/zip/master", path.join(__dirname, "../../../"), {
         extract: true,
         headers: {
             "Access-Control-Allow-Headers": "Content-Length"

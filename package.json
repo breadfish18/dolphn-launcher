@@ -1,8 +1,8 @@
 {
-   "name": "sanctuary-launcher",
-   "productName": "sanctuary-launcher",
-   "version": "1.0.0",
-   "description": "My Electron application description",
+   "name": "dolphn-launcher",
+   "productName": "dolphn-launcher",
+   "version": "2.0.1",
+   "description": "A minecraft modpack launcher.",
    "main": "src/index.js",
    "scripts": {
       "start": "electron-forge start",
@@ -13,39 +13,60 @@
    },
    "keywords": [],
    "author": {
-      "name": "HexiaLabs",
-      "email": "hexiadesignsfx@gmail.com"
+      "name": "breadfish_18",
+      "email": "myamifx@gmail.com"
    },
-   "license": "MIT",
+   "license": "ISC",
    "config": {
       "forge": {
          "packagerConfig": {
             "asar": true,
-            "icon": "icon.ico"
+            "icon": "icon.ico",
+            "name": "dolphn"
          },
          "makers": [
             {
                "name": "@electron-forge/maker-squirrel",
                "config": {
-                  "name": "sanctuary_launcher",
+                  "name": "dolphn",
                   "loadingGif": "animation.gif",
                   "noDelta": true,
-                  "setupIcon": "icon.ico"
+                  "setupIcon": "icon.ico",
+                  "setupExe": "dolphn-setup-x64.exe",
+                  "title": "dolphn launcher"
                }
             },
             {
                "name": "@electron-forge/maker-zip",
                "platforms": [
-                  "darwin"
+                  "darwin",
+                  "linux"
                ]
             },
             {
                "name": "@electron-forge/maker-deb",
-               "config": {}
+               "config": {
+                  "options": {
+                     "maintainer": "breadfish_18"
+                  }
+               }
             },
             {
                "name": "@electron-forge/maker-rpm",
                "config": {}
+            }
+         ],
+         "publishers": [
+            {
+               "name": "@electron-forge/publisher-github",
+               "config": {
+                  "authToken": "3650e96ee914586b174a06493e646dab10d6c0fd",
+                  "repository": {
+                     "owner": "breadfish18",
+                     "name": "dolphn-launcher"
+                  },
+                  "prerelease": true
+               }
             }
          ]
       }
@@ -68,6 +89,7 @@
       "@electron-forge/maker-rpm": "^6.0.0-beta.50",
       "@electron-forge/maker-squirrel": "^6.0.0-beta.50",
       "@electron-forge/maker-zip": "^6.0.0-beta.50",
+      "@electron-forge/publisher-github": "^6.0.0-beta.50",
       "electron": "8.2.3"
    }
 }
