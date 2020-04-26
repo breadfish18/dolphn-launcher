@@ -3,6 +3,7 @@ const {
   BrowserWindow,
   ipcMain
 } = require('electron');
+require('update-electron-app')();
 const {
   Authenticator
 } = require("minecraft-launcher-core");

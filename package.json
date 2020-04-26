@@ -1,7 +1,7 @@
 {
    "name": "dolphn-launcher",
    "productName": "dolphn-launcher",
-   "version": "2.1.1",
+   "version": "2.1.3",
    "description": "A minecraft modpack launcher.",
    "main": "src/index.js",
    "scripts": {
@@ -16,6 +16,7 @@
       "name": "breadfish_18",
       "email": "myamifx@gmail.com"
    },
+   "repository": "https://github.com/breadfish18/dolphn-launcher",
    "license": "ISC",
    "config": {
       "forge": {
@@ -60,7 +61,7 @@
             {
                "name": "@electron-forge/publisher-github",
                "config": {
-                  "authToken": "137b256309a01dabce8a5a03efd65e54076ca2f4",
+                  "authToken": "9936db608fd73d515803838381695d7bc6afeac6",
                   "repository": {
                      "owner": "breadfish18",
                      "name": "dolphn-launcher"
@@ -78,7 +79,8 @@
       "fs-extra": "^9.0.0",
       "fse": "^4.0.1",
       "minecraft-launcher-core": "^3.13.1",
-      "node-downloader-helper": "^1.0.12"
+      "node-downloader-helper": "^1.0.12",
+      "update-electron-app": "^1.5.0"
    },
    "devDependencies": {
       "@electron-forge/cli": "^6.0.0-beta.50",
