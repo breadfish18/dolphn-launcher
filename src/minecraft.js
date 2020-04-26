@@ -1,9 +1,13 @@
-const download = require('download');
 const request = require('./utils');
 
 const fs = require("fs-extra");
 const path = require("path")
 const fetch = require("node-fetch");
+const decompress = require("decompress");
+
+const {
+    DownloaderHelper
+} = require('node-downloader-helper');
 
 const {
     ipcRenderer,
@@ -13,6 +17,7 @@ let win = remote.getCurrentWindow()
 
 let bar = document.getElementById("progress")
 let job = document.getElementById("job")
+let speed = document.getElementById("download")
 const lang = {
     natives: "Downloading natives...",
     classes: "Downloading classes...",
@@ -22,8 +27,7 @@ const lang = {
 }
 
 const {
-    Client,
-    Authenticator
+    Client
 } = require("minecraft-launcher-core");
 const launcher = new Client();
 
@@ -33,28 +37,29 @@ job.innerText = `Logged in as: ${user.selectedProfile.name}`
 
 
 async function downloadModpack() {
-    await download("https://codeload.github.com/breadfish18/sanctuary-modpack/zip/master", path.join(__dirname, "../../../"), {
-        extract: true,
-        headers: {
-            "Access-Control-Allow-Headers": "Content-Length"
-        }
-    }).on('response', res => {
+    const pack = new DownloaderHelper('https://cdn.dolphn.app/sanctuary-modpack/pack.zip', path.join(__dirname, "../../../"));
+    pack.on("progress", (data) => {
         job.innerText = lang["modpack"]
-        console.log(res)
-        bar.max = +res.headers['content-length']
-        res.on('data', data => bar.value = bar.value + data.length);
-    }).catch(e => console.log(e))
-    fs.copySync(path.join(__dirname, "../../../", "./sanctuary-modpack-master"), path.join(__dirname, "../../../", "./minecraft"))
-    fs.removeSync(path.join(__dirname, "../../../", "./sanctuary-modpack-master"))
-    await download("https://files.minecraftforge.net/maven/net/minecraftforge/forge/1.12.2-14.23.5.2838/forge-1.12.2-14.23.5.2838-universal.jar", path.join(__dirname, "../../../"), {
-        filename: "forge.jar"
-    }).on('response', res => {
+        bar.max = data.total;
+        bar.value = data.downloaded;
+        speed.innerText = Math.round(data.speed / 1048576) + "MB/s"
+    })
+    await pack.start()
+    await decompress(path.join(__dirname, "../../../", "pack.zip"), path.join(__dirname, "../../../", "./minecraft"), {
+        strip: 1
+    })
+    fs.removeSync(path.join(__dirname, "../../../", "pack.zip"))
+    const forge = new DownloaderHelper("https://files.minecraftforge.net/maven/net/minecraftforge/forge/1.12.2-14.23.5.2838/forge-1.12.2-14.23.5.2838-universal.jar", path.join(__dirname, "../../../"), {
+        fileName: "forge.jar"
+    })
+    forge.on("progress", (data) => {
         job.innerText = lang["forge"]
-        bar.max = +res.headers['content-length']
-        res.on('data', data => bar.value = bar.value + data.length);
-
-        console.log(res)
-    }).catch(e => console.log(e))
+        bar.max = data.total;
+        bar.value = data.downloaded;
+        speed.innerText = Math.round(data.speed / 1048576) + "MB/s"
+    })
+    await forge.start()
+    speed.innerText = ""
 }
 
 
@@ -74,7 +79,6 @@ async function play() {
         await downloadModpack()
     }
     const auth = JSON.parse(fs.readFileSync(path.join(__dirname, "../../../", "user_cache.json")))
-    // console.log(Authenticator.refreshAuth(auth.accessToken, auth.clientToken, auth.selected_profile))
     const body = await request("https://authserver.mojang.com/refresh", {
         json: {
             "agent": {
@@ -85,7 +89,7 @@ async function play() {
             "clientToken": auth.clientToken,
         }
     }).catch(e => console.error(e))
-    if (!body || !body.selectedProfile) return
+    if (!body || !body.selectedProfile) return remote.getCurrentWindow().loadFile(path.join(__dirname, 'login.html'))
     fs.writeFileSync(path.join(__dirname, "../../../", "user_cache.json"), JSON.stringify(body))
     const creds = {
         access_token: body.accessToken,
@@ -123,6 +127,7 @@ async function play() {
         ipcRenderer.sendSync("status", "exit")
     })
     launcher.on("progress", (e) => {
+        console.log(e)
         bar.max = e.total;
         bar.value = e.task;
         job.innerText = lang[e.type];
